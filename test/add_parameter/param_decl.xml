@@ -2,7 +2,8 @@
 <unit xmlns="http://www.sdml.info/srcML/src" xmlns:cpp="http://www.sdml.info/srcML/cpp" revision="0.8.0" language="C++" filename="source/param_decl.cpp"><cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>&lt;iostream&gt;</cpp:file></cpp:include>
 <using>using <namespace>namespace <name>std</name>;</namespace></using>
 
-<function_decl><type><name>int</name></type> <name>successor</name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>input</name></decl></parameter>)</parameter_list>;</function_decl>
+<aroma refactor="add_parameter">
+<function_decl><type><name>int</name></type> <name>successor</name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>input</name></decl></parameter>)</parameter_list>;</function_decl></aroma>
 
 <function><type><name>int</name></type> <name>main</name> <parameter_list>()</parameter_list>
 <block>{
@@ -13,6 +14,7 @@
    <return>return <expr><literal type="number">0</literal></expr>;</return>
 }</block></function>
 
+<aroma refactor="add_parameter">
 <function><type><name>int</name></type> <name>successor</name><parameter_list>(<parameter><decl><type><name>int</name></type> <name>a</name></decl></parameter>)</parameter_list> <block>{
   <return>return <expr><operator>++</operator><name>a</name></expr>;</return>
-}</block></function></unit>
+}</block></function></aroma></unit>
