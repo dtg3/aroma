@@ -28,12 +28,6 @@ FOOTER = '''\
 </xsl:stylesheet>
 '''
 
-INSERT_PARAMETER = '''\
-   <xsl:template match="//src:aroma[@refactor='add_parameter']//src:function/src:parameter_list/src:param[last()]" xml:space="preserve">
-      <xsl:copy-of select="."/>,<xsl:text> </xsl:text><param><decl><type><name>TYPE</name></type><xsl:text> </xsl:text><name>PARAM</name></decl></param>
-   </xsl:template>
-
-'''
 
 INSERT_ARGUMENT = '''\
    <xsl:template match="//src:call[./src:name = 'successor']//src:argument_list//src:argument[last()]" xml:space="preserve">
