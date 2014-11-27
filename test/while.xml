@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <unit xmlns="http://www.sdml.info/srcML/src" xmlns:cpp="http://www.sdml.info/srcML/cpp" revision="0.8.0" language="C++" filename="while.cpp"><cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>&lt;iostream&gt;</cpp:file></cpp:include>
 <using>using <namespace>namespace <name>std</name>;</namespace></using>
-  
-<function refactor="add_parameter"><type><name>int</name></type> <name>successor</name><parameter_list>(<param><decl><type><name>int</name></type> <name>a</name></decl></param>)</parameter_list> <block>{
+
+<aroma refactor="add_parameter">
+<function><type><name>int</name></type> <name>successor</name><parameter_list>(<param><decl><type><name>int</name></type> <name>a</name></decl></param>)</parameter_list> <block>{
   <return>return <expr><operator>++</operator><name>a</name></expr>;</return>
-}</block></function>
+}</block></function></aroma>
 
 <function><type><name>int</name></type> <name>main</name> <parameter_list>()</parameter_list>
 <block>{
