@@ -18,9 +18,4 @@
       </xsl:copy>
    </xsl:template>
 
-   <xsl:template match="//src:aroma[@refactor='add_parameter']//src:parameter_list/src:parameter" xml:space="preserve">
-      <xsl:copy-of select="."/><TEMP/>
-      <!--<xsl:text>, </xsl:text><param><decl><type><name>TYPE</name></type><xsl:text> </xsl:text><name>PARAM</name></decl></param>-->
-   </xsl:template>
-
 </xsl:stylesheet>
