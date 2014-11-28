@@ -38,8 +38,7 @@ INSERT_ARGUMENT = '''\
 
 def insert_parameter(match, param_type, param_name):
    param = "<xsl:template match=" + "\"" + match + "\"" + " xml:space=\"preserve\">"
-   param += "<xsl:copy-of select=\".\"/>,<xsl:text> </xsl:text><param><decl><type><name>" + param_type + "</name></type><xsl:text> </xsl:text><name>" + param_name + "</name></decl></param>"
-   param += "</xsl:template>"
+   param += "<xsl:copy-of select=\".\"/><xsl:text>, </xsl:text><param><decl><type><name>" + param_type + "</name></type><xsl:text> </xsl:text><name>" + param_name + "</name></decl></param></xsl:template>"
    return param
 
 def insert_line_comment(match, content):
