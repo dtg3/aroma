@@ -5,6 +5,7 @@ from transform import *
 parser = argparse.ArgumentParser()
 parser.add_argument("input_file", help="input xml file")
 parser.add_argument("--add_parameter", help="perform an add parameter refactoring")
+parser.add_argument("--pull_up_field", help="preform a pull up field refactoring")
 parser.add_argument("-o", "--output", help="output xml filename")
 args = parser.parse_args()
 

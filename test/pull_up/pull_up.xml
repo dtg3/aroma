@@ -5,12 +5,12 @@
 <cpp:define>#<cpp:directive>define</cpp:directive> <cpp:macro><name>ANIMAL_HPP</name></cpp:macro></cpp:define>
 
 <comment type="line">// abstract base class</comment>
-<class>class <name>Animal</name>
+<aroma refactor="pull_up" role="destination"><class>class <name>Animal</name>
 <block>{<private type="default">
   </private><public>public:
     <comment type="line">// pure virtual method</comment>
     <function_decl><type><specifier>virtual</specifier> <name>void</name></type> <name>speak</name><parameter_list>()</parameter_list> = <literal type="number">0</literal>;</function_decl>
-</public>}</block>;</class>
+</public>}</block>;</class></aroma>
 <cpp:endif>#<cpp:directive>endif</cpp:directive></cpp:endif>
 </unit>
 
@@ -24,7 +24,7 @@
 <class>class <name>Dog</name> <super>: <specifier>public</specifier> <name>Animal</name></super>
 <block>{<private type="default">
   </private><private>private:
-    <aroma refactor="pull_up"><decl_stmt><decl><type><name>double</name></type> <name>weight</name></decl>;</decl_stmt></aroma>
+    <aroma refactor="pull_up" role="source"><decl_stmt><decl><type><name>double</name></type> <name>weight</name></decl>;</decl_stmt></aroma>
 
   </private><public>public:
     <comment type="line">// polymorphic implementation of speak</comment>
@@ -48,7 +48,7 @@
 <class>class <name>Cat</name> <super>: <specifier>public</specifier> <name>Animal</name></super>
 <block>{<private type="default">
   </private><private>private:
-    <aroma refactor="pull_up"><decl_stmt><decl><type><name>double</name></type> <name>weight</name></decl>;</decl_stmt></aroma>
+    <aroma refactor="pull_up" role="source"><decl_stmt><decl><type><name>double</name></type> <name>weight</name></decl>;</decl_stmt></aroma>
 
   </private><public>public:
     <comment type="line">// polymorphic implementation of speak</comment>
