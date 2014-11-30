@@ -24,7 +24,7 @@
 <class>class <name>Dog</name> <super>: <specifier>public</specifier> <name>Animal</name></super>
 <block>{<private type="default">
   </private><private>private:
-    <decl_stmt><decl><type><name>double</name></type> <name>weight</name></decl>;</decl_stmt>
+    <aroma refactor="pull_up"><decl_stmt><decl><type><name>double</name></type> <name>weight</name></decl>;</decl_stmt></aroma>
 
   </private><public>public:
     <comment type="line">// polymorphic implementation of speak</comment>
@@ -48,7 +48,7 @@
 <class>class <name>Cat</name> <super>: <specifier>public</specifier> <name>Animal</name></super>
 <block>{<private type="default">
   </private><private>private:
-    <decl_stmt><decl><type><name>double</name></type> <name>weight</name></decl>;</decl_stmt>
+    <aroma refactor="pull_up"><decl_stmt><decl><type><name>double</name></type> <name>weight</name></decl>;</decl_stmt></aroma>
 
   </private><public>public:
     <comment type="line">// polymorphic implementation of speak</comment>

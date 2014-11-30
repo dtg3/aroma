@@ -12,12 +12,21 @@
 
    <xsl:output method="xml" omit-xml-declaration="no" version="1.0" encoding="UTF-8"/>
 
-   <xsl:template match="@* | node()">
+   <xsl:template match="@* | node()" name="identity">
       <xsl:copy>
          <xsl:apply-templates select="@* | node()"/>
       </xsl:copy>
    </xsl:template>
 
-   <xsl:template match="//src:aroma[@refactor='add_parameter']//src:parameter_list/src:parameter[last()]" xml:space="preserve"><xsl:copy-of select="."/><xsl:text>, </xsl:text><param><decl><type><name>TYPE</name></type><xsl:text> </xsl:text><name>PARAM</name></decl></param></xsl:template>
+   <xsl:template match="//src:unit[@filename='animal.hpp']/src:class/src:block/src:private[last()]" xml:space="preserve">
+      <xsl:copy-of select="."/>
+      <xsl:apply-templates select="//src:private/src:aroma[@refactor='pull_up']">
+         <TAG/><xsl:text>&#xa;</xsl:text><xsl:copy-of select="."/><ENDTAG/>
+      </xsl:apply-templates>
+      <xsl:text>&#xa;</xsl:text>
+   </xsl:template>
+
+<!-- REMOVE OLD STUFF
+   <xsl:template match="//src:aroma[@refactor='pull_up']"/> -->
 
 </xsl:stylesheet>
