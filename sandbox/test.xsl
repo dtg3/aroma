@@ -21,7 +21,7 @@
    <xsl:template match="//src:unit[@filename='animal.hpp']/src:class/src:block/src:private[last()]" xml:space="preserve">
       <xsl:copy-of select="."/>
       <xsl:apply-templates select="//src:private/src:aroma[@refactor='pull_up']">
-         <TAG/><xsl:text>&#xa;</xsl:text><xsl:copy-of select="."/><ENDTAG/>
+         <xsl:copy-of select="."/>
       </xsl:apply-templates>
       <xsl:text>&#xa;</xsl:text>
    </xsl:template>
