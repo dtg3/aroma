@@ -20,9 +20,9 @@
 
    <xsl:template match="//src:aroma[@refactor='pull_up' and @role='destination']/src:class/src:block/src:private[last()]" xml:space="preserve">
       <xsl:copy-of select="."/>
-      <xsl:apply-templates select="//src:aroma[@refactor='pull_up' and @role='source']">
+      <!--<xsl:apply-templates select="//src:aroma[@refactor='pull_up' and @role='source']">
          <xsl:copy-of select="."/>
-      </xsl:apply-templates>
+      </xsl:apply-templates>-->
       <xsl:text>&#xa;</xsl:text>
    </xsl:template>
 
