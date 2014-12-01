@@ -18,9 +18,9 @@
       </xsl:copy>
    </xsl:template>
 
-   <xsl:template match="//src:unit[@filename='animal.hpp']/src:class/src:block/src:private[last()]" xml:space="preserve">
+   <xsl:template match="//src:aroma[@refactor='pull_up' and @role='destination']/src:class/src:block/src:private[last()]" xml:space="preserve">
       <xsl:copy-of select="."/>
-      <xsl:apply-templates select="//src:private/src:aroma[@refactor='pull_up']">
+      <xsl:apply-templates select="//src:aroma[@refactor='pull_up' and @role='source']">
          <xsl:copy-of select="."/>
       </xsl:apply-templates>
       <xsl:text>&#xa;</xsl:text>
