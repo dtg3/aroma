@@ -5,12 +5,13 @@
 <cpp:define>#<cpp:directive>define</cpp:directive> <cpp:macro><name>ANIMAL_HPP</name></cpp:macro></cpp:define>
 
 <comment type="line">// abstract base class</comment>
-<aroma refactor="pull_up" role="destination"><class>class <name>Animal</name>
+<class>class <name>Animal</name>
 <block>{<private type="default">
-  </private><public>public:
+  </private><decl_stmt><decl><type><name>double</name></type> <name>weight</name></decl>;</decl_stmt>
+<public>public:
     <comment type="line">// pure virtual method</comment>
     <function_decl><type><specifier>virtual</specifier> <name>void</name></type> <name>speak</name><parameter_list>()</parameter_list> = <literal type="number">0</literal>;</function_decl>
-</public>}</block>;</class></aroma>
+</public>}</block>;</class>
 <cpp:endif>#<cpp:directive>endif</cpp:directive></cpp:endif>
 </unit>
 
@@ -24,7 +25,7 @@
 <class>class <name>Dog</name> <super>: <specifier>public</specifier> <name>Animal</name></super>
 <block>{<private type="default">
   </private><private>private:
-    <aroma refactor="pull_up" role="source"><decl_stmt><decl><type><name>double</name></type> <name>weight</name></decl>;</decl_stmt></aroma>
+    
 
   </private><public>public:
     <comment type="line">// polymorphic implementation of speak</comment>
@@ -48,7 +49,7 @@
 <class>class <name>Cat</name> <super>: <specifier>public</specifier> <name>Animal</name></super>
 <block>{<private type="default">
   </private><private>private:
-    <aroma refactor="pull_up" role="source"><decl_stmt><decl><type><name>double</name></type> <name>weight</name></decl>;</decl_stmt></aroma>
+    
 
   </private><public>public:
     <comment type="line">// polymorphic implementation of speak</comment>
@@ -66,11 +67,11 @@
 <cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>&lt;iostream&gt;</cpp:file></cpp:include>
 
 <function><type><name>void</name></type> <name><name>Cat</name><operator>::</operator><name>setWeight</name></name><parameter_list>(<parameter><decl><type><name>double</name></type> <name>w</name></decl></parameter>)</parameter_list> <block>{
-	<expr_stmt><expr><name>weight</name> <operator>=</operator> <name>w</name></expr>;</expr_stmt>
+  <expr_stmt><expr><name>weight</name> <operator>=</operator> <name>w</name></expr>;</expr_stmt>
 }</block></function>
 
 <function><type><name>double</name></type> <name><name>Cat</name><operator>::</operator><name>getWeight</name></name><parameter_list>()</parameter_list> <block>{
-	<return>return <expr><name>weight</name></expr>;</return>
+  <return>return <expr><name>weight</name></expr>;</return>
 }</block></function><empty_stmt>;</empty_stmt></unit>
 
 <unit xmlns:cpp="http://www.sdml.info/srcML/cpp" revision="0.8.0" language="C++" filename="dog.cpp" hash="ddb35266c381bd12ab6e49c825505e45d0aba66e"><cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>"dog.hpp"</cpp:file></cpp:include>

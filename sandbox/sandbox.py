@@ -3,7 +3,7 @@ from lxml import etree
 ns = {'src': 'http://www.sdml.info/srcML/src',
                   'cpp': 'http://www.sdml.info/srcML/cpp'}
 
-inputXML = etree.parse('../test/pull_up/pull_up.xml')
+inputXML = etree.parse('../test/pull_up_function/pull_up.xml')
 
 result = inputXML.xpath("//src:private/src:aroma[@refactor='pull_up' and @role='source']/src:decl_stmt",
 							namespaces=ns)
