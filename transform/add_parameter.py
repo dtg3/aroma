@@ -26,4 +26,4 @@ def refactor(input, params, output):
 	transform = etree.XSLT(xslt_root)
 	outputXML = transform(outputXML)
 
-	print(etree.tostring(outputXML))
+	print('''<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n''' + etree.tostring(outputXML))
