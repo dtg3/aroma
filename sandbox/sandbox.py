@@ -43,6 +43,8 @@ for field in fields:
 	xsltcode += field.replace(' ', '<xsl:text>&#032;</xsl:text>')
 	xsltcode += '''<xsl:text>&#xa;</xsl:text></xsl:template>'''
 
+xsltcode += '''<xsl:template match="//src:aroma[@refactor='pull_up' and @role='source']"/>'''
+
 xsltcode += '</xsl:stylesheet>'
 
 xslt_root = etree.XML(xsltcode)

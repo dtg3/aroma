@@ -70,3 +70,19 @@ def replace_contents(match, contents):
    new += contents
    new += "</xsl:template>"
    return new
+
+def move_fields(match, fields):
+   move = '''<xsl:template match="'''
+   move += match
+   move += '''" xml:space="preserve">'''
+   move += '''<xsl:copy-of select="."/>'''
+
+   for field in fields:
+      move += field.replace(' ', '<xsl:text>&#032;</xsl:text>')
+      move += '''<xsl:text>&#xa;</xsl:text>'''
+
+   move += '''</xsl:template>'''
+
+   move += '''<xsl:template match="//src:aroma[@refactor='pull_up' and @role='source']"/>'''
+
+   return move
