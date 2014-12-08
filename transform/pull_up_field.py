@@ -23,8 +23,6 @@ def protected_accessor(inputXML):
   else:
     return False
 
-
-
 def refactor(input, output):
 
   inputXML = etree.parse(input)
