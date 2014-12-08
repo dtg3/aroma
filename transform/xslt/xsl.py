@@ -28,7 +28,6 @@ FOOTER = '''\
 </xsl:stylesheet>
 '''
 
-
 INSERT_ARGUMENT = '''\
    <xsl:template match="//src:call[./src:name = 'successor']//src:argument_list//src:argument[last()]" xml:space="preserve">
       <xsl:copy-of select="."/>,<xsl:text> </xsl:text><argument><expr><name>PARAM</name></expr></argument>
