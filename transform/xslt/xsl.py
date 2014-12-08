@@ -71,18 +71,28 @@ def replace_contents(match, contents):
    new += "</xsl:template>"
    return new
 
-def move_fields(match, fields):
+def move_fields(match, fields, present):
    move = '''<xsl:template match="'''
+
+   if present:
+      match += '''/src:protected'''
+   else:
+      match += '''/src:private[last()]'''
+
    move += match
    move += '''" xml:space="preserve">'''
    move += '''<xsl:copy-of select="."/>'''
-   move += '''<protected>protected:\n'''
+   
+   if not present:
+      move += '''<protected>protected:\n'''
 
    for field in fields:
       move += field.replace(' ', '<xsl:text>&#032;</xsl:text>')
       move += '''<xsl:text>&#xa;</xsl:text>'''
 
-   move += '''</protected>'''
+   if not present:
+      move += '''</protected>'''
+      
    move += '''</xsl:template>'''
 
    move += '''<xsl:template match="//src:aroma[@refactor='pull_up' and @role='source']"/>'''
