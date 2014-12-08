@@ -70,6 +70,12 @@ def replace_contents(match, contents):
    new += "</xsl:template>"
    return new
 
+def remove(match):
+   remove = '''<xsl:template match="'''
+   remove += match
+   remove += '''" xml:space="preserve"/>'''
+   return remove
+
 def move_fields(match, fields, present):
    move = '''<xsl:template match="'''
 
@@ -93,7 +99,5 @@ def move_fields(match, fields, present):
       move += '''</protected>'''
       
    move += '''</xsl:template>'''
-
    move += '''<xsl:template match="//src:aroma[@refactor='pull_up' and @role='source']"/>'''
-
    return move

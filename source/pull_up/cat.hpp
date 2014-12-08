@@ -14,7 +14,7 @@ class Cat : public Animal
     // polymorphic implementation of speak
     virtual void speak() {
       std::cout << "MEOW!\n";
-    };
+    }
 
     void setWeight(double w);
     double getWeight();

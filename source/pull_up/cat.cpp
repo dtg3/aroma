@@ -7,4 +7,4 @@ void Cat::setWeight(double w) {
 
 double Cat::getWeight() {
 	return weight;
-};
+}

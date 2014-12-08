@@ -30,7 +30,7 @@
     <comment type="line">// polymorphic implementation of speak</comment>
     <function><type><specifier>virtual</specifier> <name>void</name></type> <name>speak</name><parameter_list>()</parameter_list> <block>{
       <expr_stmt><expr><name><name>std</name><operator>::</operator><name>cout</name></name> <operator>&lt;&lt;</operator> <literal type="string">"WOOF!\n"</literal></expr>;</expr_stmt>
-    }</block></function><empty_stmt>;</empty_stmt>
+    }</block></function>
 
     <function_decl><type><name>void</name></type> <name>setWeight</name><parameter_list>(<parameter><decl><type><name>double</name></type> <name>w</name></decl></parameter>)</parameter_list>;</function_decl>
     <function_decl><type><name>double</name></type> <name>getWeight</name><parameter_list>()</parameter_list>;</function_decl>
@@ -54,7 +54,7 @@
     <comment type="line">// polymorphic implementation of speak</comment>
     <function><type><specifier>virtual</specifier> <name>void</name></type> <name>speak</name><parameter_list>()</parameter_list> <block>{
       <expr_stmt><expr><name><name>std</name><operator>::</operator><name>cout</name></name> <operator>&lt;&lt;</operator> <literal type="string">"MEOW!\n"</literal></expr>;</expr_stmt>
-    }</block></function><empty_stmt>;</empty_stmt>
+    }</block></function>
 
     <function_decl><type><name>void</name></type> <name>setWeight</name><parameter_list>(<parameter><decl><type><name>double</name></type> <name>w</name></decl></parameter>)</parameter_list>;</function_decl>
     <function_decl><type><name>double</name></type> <name>getWeight</name><parameter_list>()</parameter_list>;</function_decl>
@@ -71,7 +71,7 @@
 
 <function><type><name>double</name></type> <name><name>Cat</name><operator>::</operator><name>getWeight</name></name><parameter_list>()</parameter_list> <block>{
 	<return>return <expr><name>weight</name></expr>;</return>
-}</block></function><empty_stmt>;</empty_stmt></unit>
+}</block></function></unit>
 
 <unit xmlns:cpp="http://www.sdml.info/srcML/cpp" revision="0.8.0" language="C++" filename="dog.cpp" hash="ddb35266c381bd12ab6e49c825505e45d0aba66e"><cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>"dog.hpp"</cpp:file></cpp:include>
 <cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>&lt;iostream&gt;</cpp:file></cpp:include>

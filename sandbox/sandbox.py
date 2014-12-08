@@ -1,10 +1,12 @@
 from lxml import etree
-
+'''
 ns = {'src': 'http://www.sdml.info/srcML/src',
                   'cpp': 'http://www.sdml.info/srcML/cpp'}
+'''
 
-inputXML = etree.parse('../test/pull_up_field/pull_up.xml')
+inputXML = etree.parse('../test/pull_up_function/pull_up.xml')
 
+'''
 result = inputXML.xpath("//src:private/src:aroma[@refactor='pull_up' and @role='source']/src:decl_stmt",
               namespaces=ns)
 
@@ -22,6 +24,7 @@ result2 = inputXML.xpath("//src:aroma[@refactor='pull_up' and @role='destination
                      namespaces=ns)
 
 print len(result2)
+'''
 
 xsltcode = '''<xsl:stylesheet
    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -44,14 +47,14 @@ xsltcode = '''<xsl:stylesheet
    </xsl:template>
 '''
 
-xsltcode += '''<xsl:template match="//src:aroma[@refactor='pull_up' and @role='destination']/src:class/src:block/src:private[last()]" xml:space="preserve">
-<xsl:copy-of select="."/>'''
 
-for field in fields:
-  xsltcode += field.replace(' ', '<xsl:text>&#032;</xsl:text>')
-  xsltcode += '''<xsl:text>&#xa;</xsl:text>'''
+xsltcode += '''<xsl:template match="//src:aroma[@refactor='remove']" xml:space="preserve"/>'''
 
-xsltcode += '''</xsl:template>'''
+#for field in fields:
+#  xsltcode += field.replace(' ', '<xsl:text>&#032;</xsl:text>')
+#  xsltcode += '''<xsl:text>&#xa;</xsl:text>'''
+
+#xsltcode += '''</xsl:template>'''
 
 #xsltcode += '''<xsl:template match="//src:aroma[@refactor='pull_up' and @role='source']"/>'''
 

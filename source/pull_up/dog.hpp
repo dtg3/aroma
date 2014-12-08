@@ -13,7 +13,7 @@ class Dog : public Animal
     // polymorphic implementation of speak
     virtual void speak() {
       std::cout << "WOOF!\n";
-    };
+    }
 
     void setWeight(double w);
     double getWeight();
