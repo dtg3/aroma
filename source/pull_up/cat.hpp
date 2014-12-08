@@ -7,8 +7,8 @@
 // derived class
 class Cat : public Animal
 {
+
   private:
-    double weight;
 
   public:
     // polymorphic implementation of speak

@@ -8,7 +8,6 @@
 class Dog : public Animal
 {
   private:
-    double weight;
 
   public:
     // polymorphic implementation of speak

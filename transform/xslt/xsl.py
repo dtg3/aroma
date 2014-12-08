@@ -76,11 +76,13 @@ def move_fields(match, fields):
    move += match
    move += '''" xml:space="preserve">'''
    move += '''<xsl:copy-of select="."/>'''
+   move += '''<protected>protected:\n'''
 
    for field in fields:
       move += field.replace(' ', '<xsl:text>&#032;</xsl:text>')
       move += '''<xsl:text>&#xa;</xsl:text>'''
 
+   move += '''</protected>'''
    move += '''</xsl:template>'''
 
    move += '''<xsl:template match="//src:aroma[@refactor='pull_up' and @role='source']"/>'''
