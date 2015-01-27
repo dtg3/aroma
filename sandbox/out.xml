@@ -1,0 +1,92 @@
+2
+{http://www.sdml.info/srcML/src}decl_stmt
+{http://www.sdml.info/srcML/src}decl_stmt
+0
+<unit xmlns="http://www.sdml.info/srcML/src" revision="0.8.0">
+
+<unit xmlns:cpp="http://www.sdml.info/srcML/cpp" revision="0.8.0" language="C++" filename="animal.hpp" hash="3997ee2cfe4119eefb3b9a406d6b0766844df89a"><cpp:ifndef>#<cpp:directive>ifndef</cpp:directive> <name>ANIMAL_HPP</name></cpp:ifndef>
+<cpp:define>#<cpp:directive>define</cpp:directive> <cpp:macro><name>ANIMAL_HPP</name></cpp:macro></cpp:define>
+
+<comment type="line">// abstract base class</comment>
+<aroma refactor="pull_up" role="destination"><class>class <name>Animal</name>
+<block>{<private type="default">
+  </private><decl_stmt><decl><type><name>double</name></type> <name>weight</name></decl>;</decl_stmt>
+<public>public:
+    <comment type="line">// pure virtual method</comment>
+    <function_decl><type><specifier>virtual</specifier> <name>void</name></type> <name>speak</name><parameter_list>()</parameter_list> = <literal type="number">0</literal>;</function_decl>
+</public>}</block>;</class></aroma>
+<cpp:endif>#<cpp:directive>endif</cpp:directive></cpp:endif>
+</unit>
+
+<unit xmlns:cpp="http://www.sdml.info/srcML/cpp" revision="0.8.0" language="C++" filename="dog.hpp" hash="6868b21ea9dc4acd8a2eeeb7d8baee34cf1875df"><cpp:ifndef>#<cpp:directive>ifndef</cpp:directive> <name>DOG_HPP</name></cpp:ifndef>
+<cpp:define>#<cpp:directive>define</cpp:directive> <cpp:macro><name>DOG_HPP</name></cpp:macro></cpp:define>
+
+<cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>"animal.hpp"</cpp:file></cpp:include>
+<cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>&lt;iostream&gt;</cpp:file></cpp:include>
+
+<comment type="line">// derived class</comment>
+<class>class <name>Dog</name> <super>: <specifier>public</specifier> <name>Animal</name></super>
+<block>{<private type="default">
+  </private><private>private:
+    <aroma refactor="pull_up" role="source"><decl_stmt><decl><type><name>double</name></type> <name>weight</name></decl>;</decl_stmt></aroma>
+
+  </private><public>public:
+    <comment type="line">// polymorphic implementation of speak</comment>
+    <function><type><specifier>virtual</specifier> <name>void</name></type> <name>speak</name><parameter_list>()</parameter_list> <block>{
+      <expr_stmt><expr><name><name>std</name><operator>::</operator><name>cout</name></name> <operator>&lt;&lt;</operator> <literal type="string">"WOOF!\n"</literal></expr>;</expr_stmt>
+    }</block></function><empty_stmt>;</empty_stmt>
+
+    <function_decl><type><name>void</name></type> <name>setWeight</name><parameter_list>(<parameter><decl><type><name>double</name></type> <name>w</name></decl></parameter>)</parameter_list>;</function_decl>
+    <function_decl><type><name>double</name></type> <name>getWeight</name><parameter_list>()</parameter_list>;</function_decl>
+</public>}</block>;</class>
+<cpp:endif>#<cpp:directive>endif</cpp:directive></cpp:endif>
+</unit>
+
+<unit xmlns:cpp="http://www.sdml.info/srcML/cpp" revision="0.8.0" language="C++" filename="cat.hpp" hash="58aacdf224974a59d1985059d250b5f992e14be1"><cpp:ifndef>#<cpp:directive>ifndef</cpp:directive> <name>CAT_HPP</name></cpp:ifndef>
+<cpp:define>#<cpp:directive>define</cpp:directive> <cpp:macro><name>CAT_HPP</name></cpp:macro></cpp:define>
+
+<cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>"animal.hpp"</cpp:file></cpp:include>
+<cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>&lt;iostream&gt;</cpp:file></cpp:include>
+
+<comment type="line">// derived class</comment>
+<class>class <name>Cat</name> <super>: <specifier>public</specifier> <name>Animal</name></super>
+<block>{<private type="default">
+  </private><private>private:
+    <aroma refactor="pull_up" role="source"><decl_stmt><decl><type><name>double</name></type> <name>weight</name></decl>;</decl_stmt></aroma>
+
+  </private><public>public:
+    <comment type="line">// polymorphic implementation of speak</comment>
+    <function><type><specifier>virtual</specifier> <name>void</name></type> <name>speak</name><parameter_list>()</parameter_list> <block>{
+      <expr_stmt><expr><name><name>std</name><operator>::</operator><name>cout</name></name> <operator>&lt;&lt;</operator> <literal type="string">"MEOW!\n"</literal></expr>;</expr_stmt>
+    }</block></function><empty_stmt>;</empty_stmt>
+
+    <function_decl><type><name>void</name></type> <name>setWeight</name><parameter_list>(<parameter><decl><type><name>double</name></type> <name>w</name></decl></parameter>)</parameter_list>;</function_decl>
+    <function_decl><type><name>double</name></type> <name>getWeight</name><parameter_list>()</parameter_list>;</function_decl>
+</public>}</block>;</class>
+<cpp:endif>#<cpp:directive>endif</cpp:directive></cpp:endif>
+</unit>
+
+<unit xmlns:cpp="http://www.sdml.info/srcML/cpp" revision="0.8.0" language="C++" filename="cat.cpp" hash="a9fd715c749b067a66c7437acae30003f53907c5"><cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>"cat.hpp"</cpp:file></cpp:include>
+<cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>&lt;iostream&gt;</cpp:file></cpp:include>
+
+<function><type><name>void</name></type> <name><name>Cat</name><operator>::</operator><name>setWeight</name></name><parameter_list>(<parameter><decl><type><name>double</name></type> <name>w</name></decl></parameter>)</parameter_list> <block>{
+	<expr_stmt><expr><name>weight</name> <operator>=</operator> <name>w</name></expr>;</expr_stmt>
+}</block></function>
+
+<function><type><name>double</name></type> <name><name>Cat</name><operator>::</operator><name>getWeight</name></name><parameter_list>()</parameter_list> <block>{
+	<return>return <expr><name>weight</name></expr>;</return>
+}</block></function><empty_stmt>;</empty_stmt></unit>
+
+<unit xmlns:cpp="http://www.sdml.info/srcML/cpp" revision="0.8.0" language="C++" filename="dog.cpp" hash="ddb35266c381bd12ab6e49c825505e45d0aba66e"><cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>"dog.hpp"</cpp:file></cpp:include>
+<cpp:include>#<cpp:directive>include</cpp:directive> <cpp:file>&lt;iostream&gt;</cpp:file></cpp:include>
+
+<function><type><name>void</name></type> <name><name>Dog</name><operator>::</operator><name>setWeight</name></name><parameter_list>(<parameter><decl><type><name>double</name></type> <name>w</name></decl></parameter>)</parameter_list> <block>{
+  <expr_stmt><expr><name>weight</name> <operator>=</operator> <name>w</name></expr>;</expr_stmt>
+}</block></function>
+
+<function><type><name>double</name></type> <name><name>Dog</name><operator>::</operator><name>getWeight</name></name><parameter_list>()</parameter_list> <block>{
+  <return>return <expr><name>weight</name></expr>;</return>
+}</block></function>
+</unit>
+
+</unit>
