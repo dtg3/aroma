@@ -1,4 +1,13 @@
-#include <iostream>
+/** 
+ * section: 	XPath
+ * synopsis: 	Evaluate XPath expression and prints result node set.
+ * purpose: 	Shows how to evaluate XPath expression and register 
+ *          	known namespaces in XPath context.
+ * usage:	xpath1 <xml-file> <xpath-expr> [<known-ns-list>]
+ * test:	xpath1 test3.xml '//child2' > xpath1.tmp && diff xpath1.tmp $(srcdir)/xpath1.res
+ * author: 	Aleksey Sanin
+ * copy: 	see Copyright for the status of this software.
+ */
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -11,37 +20,54 @@
 
 #if defined(LIBXML_XPATH_ENABLED) && defined(LIBXML_SAX1_ENABLED)
 
-int  execute_xpath_expression(const char* filename, const xmlChar* xpathExpr, const char* ns);
+
+static void usage(const char *name);
+int  execute_xpath_expression(const char* filename, const xmlChar* xpathExpr, const xmlChar* nsList);
 int  register_namespaces(xmlXPathContextPtr xpathCtx, const xmlChar* nsList);
 void print_xpath_nodes(xmlNodeSetPtr nodes, FILE* output);
 
-int main( int argc, const char* argv[] )
-{
-	std::string xml_namespaces = "src=http://www.sdml.info/srcML/src \
-	xmlns=http://www.sdml.info/srcML/src \
-	cpp=http://www.sdml.info/srcML/cpp";
-
-	/* Parse command line and process file */
-	std::cerr << "NUMBER OF ARGS: " << argc << "\n";
-    if(argc != 3) {
-		std::cerr << "Error: wrong number of arguments.\n";
-		return(-1);
-    }
-
+int 
+main(int argc, char **argv) {
+    /* Parse command line and process file */
+    if((argc < 3) || (argc > 4)) {
+	fprintf(stderr, "Error: wrong number of arguments.\n");
+	usage(argv[0]);
+	return(-1);
+    } 
+    
     /* Init libxml */     
     xmlInitParser();
     LIBXML_TEST_VERSION
 
     /* Do the main job */
-    if(execute_xpath_expression(argv[1], BAD_CAST argv[2], xml_namespaces.c_str())) {
-		std::cerr << "BAD THINGS HAPPENED DURING EXECUTE XPATH\n";
-		return(-1);
+    if(execute_xpath_expression(argv[1], BAD_CAST argv[2], (argc > 3) ? BAD_CAST argv[3] : NULL) < 0) {
+	usage(argv[0]);
+	return(-1);
     }
 
     /* Shutdown libxml */
     xmlCleanupParser();
+    
+    /*
+     * this is to debug memory for regression tests
+     */
+    xmlMemoryDump();
+    return 0;
+}
 
-    return 0; 
+/**
+ * usage:
+ * @name:		the program name.
+ *
+ * Prints usage information.
+ */
+static void 
+usage(const char *name) {
+    assert(name);
+    
+    fprintf(stderr, "Usage: %s <xml-file> <xpath-expr> [<known-ns-list>]\n", name);
+    fprintf(stderr, "where <known-ns-list> is a list of known namespaces\n");
+    fprintf(stderr, "in \"<prefix1>=<href1> <prefix2>=href2> ...\" format\n");
 }
 
 /**
@@ -56,11 +82,10 @@ int main( int argc, const char* argv[] )
  * Returns 0 on success and a negative value otherwise.
  */
 int 
-execute_xpath_expression(const char* filename, const xmlChar* xpathExpr, const char* ns) {
+execute_xpath_expression(const char* filename, const xmlChar* xpathExpr, const xmlChar* nsList) {
     xmlDocPtr doc;
     xmlXPathContextPtr xpathCtx; 
-    xmlXPathObjectPtr xpathObj;
-    xmlChar* nsList = BAD_CAST ns;
+    xmlXPathObjectPtr xpathObj; 
     
     assert(filename);
     assert(xpathExpr);
@@ -68,8 +93,8 @@ execute_xpath_expression(const char* filename, const xmlChar* xpathExpr, const c
     /* Load XML document */
     doc = xmlParseFile(filename);
     if (doc == NULL) {
-		fprintf(stderr, "Error: unable to parse file \"%s\"\n", filename);
-		return(-1);
+	fprintf(stderr, "Error: unable to parse file \"%s\"\n", filename);
+	return(-1);
     }
 
     /* Create xpath evaluation context */
