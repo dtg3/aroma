@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -17,9 +18,10 @@ void print_xpath_nodes(xmlNodeSetPtr nodes, FILE* output);
 
 int main( int argc, const char* argv[] )
 {
-	std::string xml_namespaces = "src=http://www.sdml.info/srcML/src \
-	xmlns=http://www.sdml.info/srcML/src \
-	cpp=http://www.sdml.info/srcML/cpp";
+	std::vector< std::pair<std::string,std::string> > xml_namespaces;
+    xml_namespaces.push_back(std::make_pair(std::string("src"),std::string("http://www.sdml.info/srcML/src")));
+    xml_namespaces.push_back(std::make_pair(std::string("xmlns"),std::string("http://www.sdml.info/srcML/src")));
+    xml_namespaces.push_back(std::make_pair(std::string("cpp"),std::string("http://www.sdml.info/srcML/cpp")));
 
 	/* Parse command line and process file */
 	std::cerr << "NUMBER OF ARGS: " << argc << "\n";
@@ -32,64 +34,36 @@ int main( int argc, const char* argv[] )
     xmlInitParser();
     LIBXML_TEST_VERSION
 
-    /* Do the main job */
-    if(execute_xpath_expression(argv[1], BAD_CAST argv[2], xml_namespaces.c_str())) {
-		std::cerr << "BAD THINGS HAPPENED DURING EXECUTE XPATH\n";
-		return(-1);
-    }
-
-    /* Shutdown libxml */
-    xmlCleanupParser();
-
-    return 0; 
-}
-
-/**
- * execute_xpath_expression:
- * @filename:		the input XML filename.
- * @xpathExpr:		the xpath expression for evaluation.
- * @nsList:		the optional list of known namespaces in 
- *			"<prefix1>=<href1> <prefix2>=href2> ..." format.
- *
- * Parses input XML file, evaluates XPath expression and prints results.
- *
- * Returns 0 on success and a negative value otherwise.
- */
-int 
-execute_xpath_expression(const char* filename, const xmlChar* xpathExpr, const char* ns) {
-    xmlDocPtr doc;
-    xmlXPathContextPtr xpathCtx; 
-    xmlXPathObjectPtr xpathObj;
-    xmlChar* nsList = BAD_CAST ns;
-    
-    assert(filename);
-    assert(xpathExpr);
+    const char* filename = argv[1];
+    const xmlChar* xpathExpr = BAD_CAST argv[2];
 
     /* Load XML document */
-    doc = xmlParseFile(filename);
+    xmlDocPtr doc = xmlParseFile(filename);
     if (doc == NULL) {
-		fprintf(stderr, "Error: unable to parse file \"%s\"\n", filename);
-		return(-1);
+        fprintf(stderr, "Error: unable to parse file \"%s\"\n", filename);
+        return(-1);
     }
 
     /* Create xpath evaluation context */
-    xpathCtx = xmlXPathNewContext(doc);
+    xmlXPathContextPtr xpathCtx = xmlXPathNewContext(doc);
     if(xpathCtx == NULL) {
         fprintf(stderr,"Error: unable to create new XPath context\n");
         xmlFreeDoc(doc); 
         return(-1);
     }
-    
-    /* Register namespaces from list (if any) */
-    if((nsList != NULL) && (register_namespaces(xpathCtx, nsList) < 0)) {
-        fprintf(stderr,"Error: failed to register namespaces list \"%s\"\n", nsList);
-        xmlXPathFreeContext(xpathCtx); 
-        xmlFreeDoc(doc); 
-        return(-1);
+
+    /* Register namespaces from list */
+    for (size_t i = 0; i < xml_namespaces.size(); ++i) {
+        if(xmlXPathRegisterNs(xpathCtx, BAD_CAST xml_namespaces[i].first.c_str(), BAD_CAST xml_namespaces[i].second.c_str()) != 0) {
+            fprintf(stderr,"Error: unable to register NS with prefix=\"%s\" and href=\"%s\"\n", xml_namespaces[i].first.c_str(), xml_namespaces[i].second.c_str());
+            xmlXPathFreeContext(xpathCtx); 
+            xmlFreeDoc(doc); 
+            return(-1); 
+        }
     }
 
     /* Evaluate xpath expression */
-    xpathObj = xmlXPathEvalExpression(xpathExpr, xpathCtx);
+    xmlXPathObjectPtr xpathObj = xmlXPathEvalExpression(xpathExpr, xpathCtx);
     if(xpathObj == NULL) {
         fprintf(stderr,"Error: unable to evaluate xpath expression \"%s\"\n", xpathExpr);
         xmlXPathFreeContext(xpathCtx); 
@@ -104,70 +78,13 @@ execute_xpath_expression(const char* filename, const xmlChar* xpathExpr, const c
     xmlXPathFreeObject(xpathObj);
     xmlXPathFreeContext(xpathCtx); 
     xmlFreeDoc(doc); 
-    
-    return(0);
+
+    /* Shutdown libxml */
+    xmlCleanupParser();
+
+    return 0; 
 }
 
-/**
- * register_namespaces:
- * @xpathCtx:		the pointer to an XPath context.
- * @nsList:		the list of known namespaces in 
- *			"<prefix1>=<href1> <prefix2>=href2> ..." format.
- *
- * Registers namespaces from @nsList in @xpathCtx.
- *
- * Returns 0 on success and a negative value otherwise.
- */
-int 
-register_namespaces(xmlXPathContextPtr xpathCtx, const xmlChar* nsList) {
-    xmlChar* nsListDup;
-    xmlChar* prefix;
-    xmlChar* href;
-    xmlChar* next;
-    
-    assert(xpathCtx);
-    assert(nsList);
-
-    nsListDup = xmlStrdup(nsList);
-    if(nsListDup == NULL) {
-	fprintf(stderr, "Error: unable to strdup namespaces list\n");
-	return(-1);	
-    }
-    
-    next = nsListDup; 
-    while(next != NULL) {
-	/* skip spaces */
-	while((*next) == ' ') next++;
-	if((*next) == '\0') break;
-
-	/* find prefix */
-	prefix = next;
-	next = (xmlChar*)xmlStrchr(next, '=');
-	if(next == NULL) {
-	    fprintf(stderr,"Error: invalid namespaces list format\n");
-	    xmlFree(nsListDup);
-	    return(-1);	
-	}
-	*(next++) = '\0';	
-	
-	/* find href */
-	href = next;
-	next = (xmlChar*)xmlStrchr(next, ' ');
-	if(next != NULL) {
-	    *(next++) = '\0';	
-	}
-
-	/* do register namespace */
-	if(xmlXPathRegisterNs(xpathCtx, prefix, href) != 0) {
-	    fprintf(stderr,"Error: unable to register NS with prefix=\"%s\" and href=\"%s\"\n", prefix, href);
-	    xmlFree(nsListDup);
-	    return(-1);	
-	}
-    }
-    
-    xmlFree(nsListDup);
-    return(0);
-}
 
 /**
  * print_xpath_nodes:
