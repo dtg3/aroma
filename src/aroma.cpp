@@ -1,3 +1,5 @@
+// Aroma does automatic refactoring
+
 #include <iostream>
 #include <vector>
 #include <stdlib.h>
